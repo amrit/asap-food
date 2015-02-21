@@ -1,0 +1,19 @@
+body {
+  background-color: white;
+}
+
+.page-header{
+	padding-bottom:9px;
+	margin:40px 0 20px;
+	border-bottom:1px solid #eee;
+        text-align: center;
+}
+
+.page-header h1 {
+  font-size: 5em;
+}
+
+.title {
+  text-align: center;
+  width: 100%;
+}
