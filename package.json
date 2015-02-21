@@ -1,0 +1,22 @@
+{
+  "name": "asap-food",
+  "version": "1.0.0",
+  "description": "A$AP FOOD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amrit/asap-food.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amrit/asap-food/issues"
+  },
+  "homepage": "https://github.com/amrit/asap-food",
+  "dependencies": {
+    "express": "^4.11.2"
+  }
+}
