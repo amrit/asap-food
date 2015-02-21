@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv='Content-type' content='text/html; charset=utf-8'> 
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/css/ripples.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/css/material-wfont.min.css" rel="stylesheet">
+<head>
+    <meta content='text/html; charset=utf-8' http-equiv='Content-type'>
+    <link href=
+    "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel=
+    "stylesheet">
+    <link href=
+    "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/css/ripples.min.css"
+    rel="stylesheet">
+    <link href=
+    "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/css/material-wfont.min.css"
+    rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&key=AIzaSyA6X03n6hhuN5giVYrVvl4KRdu37mZiuno">
-    </script>
-
+    <script src=
+    "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&key=AIzaSyA6X03n6hhuN5giVYrVvl4KRdu37mZiuno"
+    type="text/javascript"></script>
     <link href="style.css" rel="stylesheet">
-    <script type="text/javascript">
-      function initialize() {
+    <script type="text/javascript">        
+    var directionsService = new google.maps.DirectionsService();
+    var directionsDisplay;
+    function initialize() {
         var mapOptions = {
           center: { lat: -34.397, lng: 150.644},
           zoom: 8
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
+
+        directionsDisplay.setMap(map);
       };
+
+
+      function calcRoute(start, end) {
+        var request = {
+          origin:start,
+          destination:end,
+          travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function(result, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(result);
+          }
+        });
+      }
 
       function getLocation() {
         if (navigator.geolocation) {
@@ -29,6 +52,8 @@
         }
       }
       function showPosition(position) {
+        directionsDisplay = new google.maps.DirectionsRenderer();
+
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
         var mapOptions = {
@@ -38,37 +63,51 @@
         var map = new google.maps.Map(document.getElementById('map-canvas'),
             mapOptions);
         map.setCenter(new google.maps.LatLng(lat, lng));
-        var marker = new google.maps.Marker({
-        position: new google.maps.LatLng([lat], [lng]),
-        map: map
-        });
+        // var marker = new google.maps.Marker({
+        // position: new google.maps.LatLng([lat], [lng]),
+        // map: map
+        //         });
+        directionsDisplay.setMap(map);
+
+        var start = new google.maps.LatLng(lat, lng);
+        var end = new google.maps.LatLng(37.424078, -122.170898);
+        calcRoute(start, end);
+
       }
 
       google.maps.event.addDomListener(window, 'load', getLocation);
     </script>
+
     <title>A$AP Food</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="page-header">
-      <h1>A$AP Food</h1>
+        <h1>A$AP Food</h1>
     </div>
+
     <div id="container">
-      <div class="row row-centered">
-        <div class="col-md-4 col-centered">
-                        <div style="text-align: center;" class="well bs-component">
-                         <h4> How much money do you want to spend? </h4>
-                            <form name="food-form" id="food-form" class="form-horizontal">
-                                <fieldset>
-                                    <div style class="form-group col-centered">
-                                            <input style="cursor: auto; width=10%;" class="form-control" name="budget" id="budget" placeholder="8" type="number">
-                                    </div>
-                                    <div class="form-group">
-                                            <button id="budget-submit" type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </fieldset>
-                            </form>
-                            <script type="text/javascript">
-                              $('#food-form').submit(function(e){
+        <div id="budget-form" class="row row-centered">
+            <div class="col-md-4 col-centered">
+                <div class="well bs-component" style="text-align: center;">
+                    <h4>How much money do you want to spend?</h4>
+
+                    <form class="form-horizontal" id="food-form" name=
+                    "food-form">
+                        <fieldset>
+                            <div class="form-group col-centered" style="">
+                                <input class="form-control" id="budget" name=
+                                "budget" placeholder="8" style=
+                                "cursor: auto; width=10%;" type="number">
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-primary" id=
+                                "budget-submit" type="submit">Submit</button>
+                            </div>
+                        </fieldset>
+                    </form><script type="text/javascript">
+          $('#food-form').submit(function(e){
                                 console.log("click");
                                 $.ajax({
                                   type: "POST",
@@ -80,22 +119,54 @@
                                    }
                                 });
                               });
-                          </script>
-                    </div>
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-centered">
+            <div class="col-md-6 col-centered">
+              <div class="well bs-component" style="text-align: center;">
+
+              <div id="restaurant">
+                <p>Subway</p>
+                <small> 459 LAGUNITA DR, STANFORD, CA 94305-8214, UNITED STATES </small>
+              </div>
+
+              <div id="order">
+                <ul class="order">
+                  <li> 1x 6-inch Veggie Delite </li>
+                  <li> 2x Chocolate Chip Cookie </li>
+                  <hr>
+                  <li><strong> Total (Including Tax) : $7.20 </strong></li>
+                </ul>
+              </div>
+                    <div class="row row-centered">
+            <div>
+                 <div class="btn-group">
+                    <button class="btn btn-warning" id="budget-submit" type="submit">Change Restaurant</button>
+                    <button class="btn btn-warning" id="budget-submit" type="submit">Change Order</button>
                   </div>
                 </div>
+          </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <div class="row row-centered">
-        <div class="col-md-6 col-centered">
-          <div class="google-map-canvas" id="map-canvas"></div>
-       </div>
-      </div>
+            <div class="col-md-6 col-centered">
+                <div class="google-map-canvas" id="map-canvas"></div>
+            </div>
+        </div>
 
-      
+        <div class="row row-centered">
+        </div>
 
-    </div>
-
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/js/ripples.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/js/material.min.js"></script>
-  </body>
+    </div><script src=
+    "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/js/ripples.min.js"></script> <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/js/material.min.js"></script>
+</body>
 </html>

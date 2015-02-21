@@ -1,5 +1,9 @@
 html, body{ height: 100%; margin: 0; padding: 0;}
 
+#budget-form {
+  margin-top: 7%;
+}
+
 .google-map-canvas,
 .google-map-canvas * { .box-sizing(content-box); }
 #map-canvas { 
@@ -21,7 +25,7 @@ body {
 }
 
 .page-header h1 {
-  font-size: 5em;
+  font-size: 3em;
 }
 
 .title {
@@ -42,4 +46,25 @@ body {
     text-align:left;
     /* inline-block space fix */
     margin-right:-4px;
+}
+
+ 
+#restaurant p {
+  font-size: 5em;
+}
+
+div#order {
+  display: inline-block;
+  text-align: left;
+  border: 1px black;
+}
+
+ul.order {
+  margin-top: 20px;
+  list-style: none;
+}
+
+#budget-submit {
+  margin-right: 8px;
+  margin-left: 8px;
 }
