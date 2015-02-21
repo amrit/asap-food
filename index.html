@@ -13,47 +13,30 @@
       <h1>A$AP Food</h1>
     </div>
     <div id="container">
-      <p>
-        To install React, follow the instructions on
-        <a href="http://www.github.com/facebook/react/">GitHub</a>.
-      </p>
-      <p>
-        If you can see this, React is not working right.
-        If you checked out the source from GitHub make sure to run <code>grunt</code>.
-      </p>
+      <div class="row row-centered">
+        <div class="col-md-4 col-centered">
+                        <div style="text-align: center;" class="well bs-component">
+          <h4> How much money do you want to spend? </h4>
+                            <form class="form-horizontal">
+                                <fieldset>
+                                    <div style class="form-group">
+                                            <input style="cursor: auto; width=10%;" class="form-control" id="inputEmail" placeholder="8" type="number">
+                                    </div>
+                                    <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                    </div>
+                  </div>
     </div>
-    <h5>Example Details</h5>
-    <p>
-      Learn more about React at
-      <a href="http://facebook.github.io/react" target="_blank">facebook.github.io/react</a>.
-    </p>
     <script src="http://fb.me/react-0.12.2.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/js/ripples.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/js/material.min.js"></script>
     <script>
-      var ExampleApplication = React.createClass({
-        render: function() {
-          var elapsed = Math.round(this.props.elapsed  / 100);
-          var seconds = elapsed / 10 + (elapsed % 10 ? '' : '.0' );
-          var message =
-            'React has been successfully running for ' + seconds + ' seconds.';
 
-          return React.DOM.p(null, message);
-        }
-      });
-
-      // Call React.createFactory instead of directly call ExampleApplication({...}) in React.render
-      var ExampleApplicationFactory = React.createFactory(ExampleApplication);
-
-      var start = new Date().getTime();
-      setInterval(function() {
-        React.render(
-          ExampleApplicationFactory({elapsed: new Date().getTime() - start}),
-          document.getElementById('container')
-        );
-      }, 50);
     </script>
   </body>
 </html>
