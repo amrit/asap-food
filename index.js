@@ -1,5 +1,7 @@
 var express = require('express')
 var app = express()
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
 
 var async = require('async')
 
@@ -90,25 +92,3 @@ var server = app.listen(3000, function () {
     console.log('Example app listening at http://%s:%s', host, port)
 
 })
-
-/*
-vclient.get_details([response.objects[0].id], function(detail_data){
-  						var objects = detail_data.objects || [];
-  						for(obj in objects){
-  							for(m in objects[obj].menus){
-  								menu = objects[obj].menus[m];
-  								for(s in menu.sections){
-  									for(ss in menu.sections[s].subsections){
-  										subsection = menu.sections[s].subsections[ss]
-  										for(c in subsection.contents){
-  											if(subsection.contents[c].price){
-  												console.log(subsection.contents[c])
-  												return_array.push({price: subsection.contents[c].price, name: subsection.contents[c].name})
-  											}
-
-  										}
-  									}
-  								}
-  							}	
-  						}
-  					})*/
