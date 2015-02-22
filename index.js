@@ -1,4 +1,5 @@
 var express = require('express')
+var request = require('superagent')
 var cors = require('cors')
 var app = express()
 var corsOptions = {
@@ -23,6 +24,47 @@ var yelp = require("yelp").createClient({
 	token: keys.yelp_token,
 	token_secret: keys.yelp_token_secret
 })
+
+
+app.get('/bills', function (req, res) {
+	var sumBills = 0
+	request.get('http://api.reimaginebanking.com/accounts/54e9465d1386a86c6b9acc01/bills?key=CUST4c74200dd76b7afb386a9fa0c4e3b0af').end(function (result) {
+		response = result.body;
+
+
+		
+
+
+		for (var i = 0; i < response.length; i ++) {
+			if (response[i].status == 'unpaid') {
+				sumBills += response[i]["payment amount"];
+			}
+		}
+		res.json(sumBills);
+
+		
+	
+	});
+	
+});
+
+
+
+app.get('/budget', function(req, res) {
+
+	request.get('http://api.reimaginebanking.com/accounts/54e9465d1386a86c6b9acc01?key=CUST4c74200dd76b7afb386a9fa0c4e3b0af').end(function (result) {
+		response = result.body;
+
+
+		var balance = response.balance;
+
+		var foodSpending = (.3 * balance) / 30.0
+		
+		res.json(foodSpending);
+		
+	});
+	
+});
 
 app.get('/api/search', function(req, res) {
 	yelp.search({term: "food", location: "Berkeley, CA"}, function(error, data) {
@@ -106,6 +148,7 @@ app.get('/process', function (req, res) {
 		res.json(stdout)
 	});
 });
+
 
 
 app.use(express.static(__dirname))
