@@ -1,7 +1,15 @@
 var express = require('express')
+var cors = require('cors')
 var app = express()
+var corsOptions = {
+  origin: 'http://localhost'
+};
+
+app.use(cors(corsOptions));
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 var async = require('async')
 
@@ -81,6 +89,24 @@ app.get('/api/search', function(req, res) {
   		
 	});
 })
+
+app.get('/process', function (req, res) {
+	var sys = require('sys')
+	var exec = require('child_process').exec;
+	function puts(error, stdout, stderr) { sys.puts(stdout) }
+
+	menu = [{"price":"5.00","name":"Quiche"},{"price":"6.50","name":"Cold Sandwiches"},{"price":"6.50","name":"Croque Monsieur"}]
+
+	total = 15
+
+	console.log("python combos.py " + "\'"+JSON.stringify(menu)+"\'" + " " + "\""+total+"\"")
+
+	exec("python combos.py " + "\'"+JSON.stringify(menu)+"\'" + " " + "\""+total+"\""  , function(error, stdout, stderr){
+		console.log("stdout" + stdout)
+		res.json(stdout)
+	});
+});
+
 
 app.use(express.static(__dirname))
 

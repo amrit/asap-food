@@ -1,7 +1,16 @@
+import sys
+import json
+
+food = sys.argv[1]
+total = float(sys.argv[2])
+
+food = json.loads(food)
+
+
 def prices(menu):
 	prices = []
 	for item in menu:
-		prices.append(item.price)
+		prices.append(item[u'price'])
 	return prices
 
 
@@ -19,23 +28,22 @@ def choose(l, k):
 
 
 
-class Food:
-	def __init__(self, name, price):
-		self.name = name
-		self.price = price
+# class Food:
+# 	def __init__(self, name, price):
+# 		self.name = name
+# 		self.price = price
 
 
-bread = Food('bread', 2)
-food = [bread]
-eggs = Food('egg', 3)
-food.append(eggs)	
-apple = Food('apple', 1)
-food.append(apple)
-
-total = 4
+# bread = Food('bread', 2)
+# food = [bread]
+# eggs = Food('egg', 3)
+# food.append(eggs)	
+# apple = Food('apple', 1)
+# food.append(apple)
 
 
 prices = prices(food)
+
 combos = choose(food, len(prices))  #combinations of food objects
 
 
@@ -44,19 +52,23 @@ for food_group in combos:
 	summ = 0
 	names = ''
 	for food in food_group:
-		summ += food.price
-		names = names + " " + food.name 
+		summ += float(food[u'price'])
+		names = names + ", " + food[u'name'] 
 	all_combos.append((summ, names))
 
+#print(all_combos)
 
 def filter_total(x):
 	final_combos = []
 	for ele in x: 
-		if ele[0] <= total:
+		if ele[0] <= float(total):
 			final_combos.append(ele)
 	return final_combos
 
-filtered = filter_total(all_combos)
+filtered = str(filter_total(all_combos))
+filtered = filtered.replace('(','[').replace(')',']').replace('u\', ', '\'')
+
+print(filtered)
 
 
 
